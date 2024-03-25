@@ -27,7 +27,7 @@ namespace FastForward
                 {
                     List<float> list = new List<float>();
                     foreach (string x in str.Replace("[", "").Replace("]", "").Trim().Split(',')) {
-                        list.Add(float.Parse(x));    
+                        list.Add(float.Parse(x, System.Globalization.CultureInfo.InvariantCulture));    
                     } return list.ToArray();
                 },
 
