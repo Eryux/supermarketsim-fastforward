@@ -16,6 +16,9 @@ namespace FastForward
         public static float _speed = 1f;
 
 
+        public bool GamePaused { get; set; } = false;
+
+
         Setting _setting;
 
         Harmony _patches;
@@ -35,8 +38,16 @@ namespace FastForward
             // Apply patches --------------------
 
             Logger.LogInfo("Apply patches...");
+
+            DayCycleManagerPatch.plugin = this;
+            EscapeMenuManagerPatch.plugin = this;
+            WarningScreenPatch.plugin = this;
+
             _patches = new Harmony("tf.bark.sms.FastForward.patches");
             _patches.PatchAll(typeof(PlayerInteractionPatch));
+            _patches.PatchAll(typeof(DayCycleManagerPatch));
+            _patches.PatchAll(typeof(EscapeMenuManagerPatch));
+            _patches.PatchAll(typeof(WarningScreenPatch));
 
             // ----------------------------------
 
@@ -171,9 +182,9 @@ namespace FastForward
         }
 
 
-        void SetGameSpeed(float value)
+        public void SetGameSpeed(float value)
         {
-            if (_mainSceneLoaded)
+            if (_mainSceneLoaded && !GamePaused)
             {
                 _speed = value;
                 Time.timeScale = _speed;

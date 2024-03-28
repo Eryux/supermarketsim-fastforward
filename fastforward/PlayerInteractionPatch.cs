@@ -11,7 +11,7 @@ namespace FastForward
     {
         [HarmonyPatch(typeof(PlayerInteraction), "CheckForHoldingInteraction")]
         [HarmonyPostfix]
-        static void CheckForHoldingInteractionPrefixPatch(PlayerInteraction __instance)
+        static void CheckForHoldingInteractionPostfixPatch(PlayerInteraction __instance)
         {
             var m_HoldingTimeField = typeof(PlayerInteraction).GetField("m_HoldingTime", BindingFlags.Instance | BindingFlags.NonPublic);
 
